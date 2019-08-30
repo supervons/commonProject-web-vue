@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Service from '../../utils/request'
 export default {
   name: 'Login',
   data () {
@@ -43,7 +44,9 @@ export default {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          Service.post('/commonProject/user/loginAction', {loginId: '18888888888', passWord: '123456'}).then(resp => {
+            // alert(JSON.stringify(resp))
+          })
         } else {
           console.log('error submit!!')
           return false
