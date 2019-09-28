@@ -1,5 +1,7 @@
 <template>
   <div class="hello">
+    <div id="summernote"></div>
+    <button @click="showData()">保存</button>
     <h1>{{ msg }}</h1>
     <el-row class="content">
       <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="12">
@@ -20,8 +22,28 @@
 </template>
 
 <script>
-import Service from '../../utils/request'
 export default {
+  mounted () {
+    $('#summernote').summernote({
+      lang: 'zh-CN',
+      height: 300,
+      minHeight: null, // set minimum height of editor
+      maxHeight: null, // set maximum height of editor
+      focus: true,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['bold', 'italic', 'underline', 'clear']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'hr']],
+        ['view', ['fullscreen', 'codeview']],
+        ['help', ['help']]
+      ]
+    })
+  },
   name: 'Login',
   data () {
     return {
@@ -44,14 +66,16 @@ export default {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          Service.post('/commonProject/user/loginAction', {loginId: '18888888888', passWord: '123456'}).then(resp => {
-            // alert(JSON.stringify(resp))
-          })
+          alert('submit!')
         } else {
           console.log('error submit!!')
           return false
         }
       })
+    },
+    showData () {
+      const htmlData = $('#summernote').summernote('code')
+      console.log(htmlData)
     }
   }
 }
